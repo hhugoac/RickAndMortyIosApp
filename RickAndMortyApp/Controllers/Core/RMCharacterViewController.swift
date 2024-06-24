@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Controller to Character
 final class RMCharacterViewController: UIViewController {
 
     override func viewDidLoad() {

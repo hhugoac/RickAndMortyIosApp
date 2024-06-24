@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Controller to show Locations
 final class RMLocationsViewController: UIViewController {
 
     override func viewDidLoad() {

@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// Controller to have tabs navigations
 final class RMTabViewController: UITabBarController {
 
     override func viewDidLoad() {
