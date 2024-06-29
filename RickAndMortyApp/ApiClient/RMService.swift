@@ -15,6 +15,13 @@ final class RMService {
     ///Privatized constructor
     private init() {}
     
+    enum RMServiceError : Error{
+        case failToCreateRequest
+    }
+    
+    enum RMServiceError{
+        
+    }
     
     /// Send Rick And Morty API call
     /// - Parameters:
@@ -24,7 +31,22 @@ final class RMService {
     public func execute<T: Codable>(
         _ request: RMRequest,
         expecting type:T.Type,
-        completion: @escaping (Result<T,Error>) -> Void){
-        
+        completion: @escaping (Result<T,Error>) -> Void
+    ){
+        guard let urlRequest = self.request(from: request) else {
+            completion(.failure(RMServiceError.failToCreateRequest))
+            return
+        }
+        let ta
+    }
+    
+    // MARK: - private
+    private func request(from rmReuqest: RMRequest) -> URLRequest? {
+        guard let url = rmReuqest.url else {
+            return nil
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = request.httpMethod
+        return request
     }
 }
