@@ -10,21 +10,23 @@ import UIKit
 /// Controller to Character
 final class RMCharacterViewController: UIViewController {
 
+    private let rmCharacteher = RMCharacterListView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .systemBackground
         self.title =  "Characters"
-        
-        let requet = RMRequest(endpoint: .character)
-        print(requet.url)
-        
-        RMService.shared.execute(requet, expecting: RMCharacter.self) {
-            result in
-            switch result
-
-        }
+        view.addSubview(rmCharacteher)
+        setupView()
     }
     
-
+    private func setupView() {
+        NSLayoutConstraint.activate([
+            rmCharacteher.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            rmCharacteher.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            rmCharacteher.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            rmCharacteher.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor)
+        ])
+    }
 }

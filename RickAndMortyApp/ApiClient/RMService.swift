@@ -16,11 +16,8 @@ final class RMService {
     private init() {}
     
     enum RMServiceError : Error{
-        case failToCreateRequest
-    }
-    
-    enum RMServiceError{
-        
+        case failedToCreateRequest
+        case failedToGetData
     }
     
     /// Send Rick And Morty API call
@@ -34,10 +31,24 @@ final class RMService {
         completion: @escaping (Result<T,Error>) -> Void
     ){
         guard let urlRequest = self.request(from: request) else {
-            completion(.failure(RMServiceError.failToCreateRequest))
+            completion(.failure(RMServiceError.failedToCreateRequest))
             return
         }
-        let ta
+        
+        let task = URLSession.shared.dataTask(with: urlRequest) { data, _, error in
+            guard let data = data, error == nil else {
+                completion(.failure(RMServiceError.failedToGetData))
+                return
+            }
+            
+            do {
+                let result = try JSONDecoder().decode(type.self, from: data)
+                completion(.success(result))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
     }
     
     // MARK: - private
