@@ -13,7 +13,7 @@ final class RMCharacterListViewViewModel: NSObject {
         RMService.shared.execute(.listCharactersRequest, expecting: RMGetAllCharactersResponse.self) { result in
             switch result {
             case .success(let model):
-                print("SUCCESS: " + String(describing: model.results.count))
+                print("SUCCESS: " + String(describing: model.results[2].image))
                 print("SUCCESS: " + String(describing: model.info.count))
             case .failure(let error):
                 print("FAILURE: " + String(describing: error))
@@ -35,8 +35,12 @@ extension RMCharacterListViewViewModel: UICollectionViewDataSource, UICollection
         ) as? RMCharacterCollectionViewCell else {
             fatalError("Unsuported cell")
         }
-        let vieModel = RMCharacterCollectionViewCellViewModel(characterName: "HUgo", characterStatus: .alive, characterImageUrl: nil)
-        cell.configure(with: vieModel)
+        let viewModel = RMCharacterCollectionViewCellViewModel(
+            characterName: "Hugo",
+            characterStatus: .alive,
+            characterImageUrl: URL(string: "https://rickandmortyapi.com/api/character/avatar/3.jpeg")
+        )
+        cell.configure(with: viewModel)
         return cell
     }
     
