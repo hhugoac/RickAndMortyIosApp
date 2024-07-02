@@ -12,6 +12,7 @@ protocol RMCharacterListViewViewModelDelegate: AnyObject {
     func disSelectCharacter(_ character: RMCharacter)
 }
 
+/// ViewModel to load items and populate the lists
 final class RMCharacterListViewViewModel: NSObject {
     
     public weak var delegate: RMCharacterListViewViewModelDelegate?
@@ -30,7 +31,9 @@ final class RMCharacterListViewViewModel: NSObject {
     }
     
     private var cellViewModels: [RMCharacterCollectionViewCellViewModel] = []
+    private var apiInfo: RMGetAllCharactersResponse.Info? = nil
     
+    /// Fetch initial set of characters (20)
     public func fetchListResults() {
         RMService.shared.execute(
             .listCharactersRequest,
@@ -40,6 +43,7 @@ final class RMCharacterListViewViewModel: NSObject {
             case .success(let responseModel):
                 let results = responseModel.results
                 self?.characters = results
+                self?.apiInfo = responseModel.info
                 DispatchQueue.main.async {
                     self?.delegate?.didLoadInitialCharacters()
                 }
@@ -48,6 +52,14 @@ final class RMCharacterListViewViewModel: NSObject {
             }
             
         }
+    }
+    
+    public func fetchAdditionalCharacters() {
+        
+    }
+    
+    public var shouldShowMoreIndecator: Bool {
+        return apiInfo?.next != nil
     }
 }
 
@@ -80,5 +92,13 @@ extension RMCharacterListViewViewModel: UICollectionViewDataSource, UICollection
         collectionView.deselectItem(at: indexPath, animated: true)
         let character = characters[indexPath.row]
         delegate?.disSelectCharacter(character)
+    }
+}
+
+extension RMCharacterListViewViewModel: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard shouldShowMoreIndecator else {
+            return
+        }
     }
 }
