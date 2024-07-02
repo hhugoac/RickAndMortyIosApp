@@ -30,10 +30,6 @@ final class RMCharacterListViewViewModel: NSObject {
         }
     }
     
-    public func fetchAdditionalCharacters() {
-        
-    }
-    
     private var cellViewModels: [RMCharacterCollectionViewCellViewModel] = []
     private var apiInfo: RMGetAllCharactersResponse.Info? = nil
     
@@ -56,6 +52,10 @@ final class RMCharacterListViewViewModel: NSObject {
             }
             
         }
+    }
+    
+    public func fetchAdditionalCharacters() {
+        
     }
     
     public var shouldShowMoreIndecator: Bool {
