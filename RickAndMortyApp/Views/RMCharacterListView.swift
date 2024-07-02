@@ -7,10 +7,18 @@
 
 import UIKit
 
+protocol RMCharacterListViewDelegate: AnyObject {
+    func rmCharacterListView(
+        _ characterListView: RMCharacterListView,
+        didSelectCharacter character: RMCharacter
+    )
+}
+
 ///  View that handles showing list of chareacters, loader, etc..
 class RMCharacterListView: UIView {
     
     private let viewModel = RMCharacterListViewViewModel()
+    public weak var delegate: RMCharacterListViewDelegate?
     
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
@@ -77,5 +85,9 @@ extension RMCharacterListView: RMCharacterListViewViewModelDelegate {
         UIView.animate(withDuration: 0.4) {
             self.collectionView.alpha = 1
         }
+    }
+    
+    func disSelectCharacter(_ character: RMCharacter) {
+        delegate?.rmCharacterListView(self, didSelectCharacter: character)
     }
 }
