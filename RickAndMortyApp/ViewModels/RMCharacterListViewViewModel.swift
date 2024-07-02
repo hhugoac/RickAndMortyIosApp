@@ -33,6 +33,7 @@ final class RMCharacterListViewViewModel: NSObject {
     private var cellViewModels: [RMCharacterCollectionViewCellViewModel] = []
     private var apiInfo: RMGetAllCharactersResponse.Info? = nil
     
+    private var isLoadingMoreCharacters: Bool = false
     /// Fetch initial set of characters (20)
     public func fetchListResults() {
         RMService.shared.execute(
@@ -50,12 +51,29 @@ final class RMCharacterListViewViewModel: NSObject {
             case .failure(let error):
                 print("FAILURE: " + String(describing: error))
             }
-            
         }
     }
     
-    public func fetchAdditionalCharacters() {
-        
+    public func fetchAdditionalCharacters(url: URL) {
+        isLoadingMoreCharacters = true
+        guard let request = RMRequest(url: url) else {
+            isLoadingMoreCharacters = false
+            return
+        }
+        RMService.shared.execute(request, expecting: RMGetAllCharactersResponse.self) { result in
+            switch result {
+            case .success(let responseModel):
+                //let results = responseModel.results
+                //self?.characters.append(contentsOf: results)
+                //self.apiInfo = responseModel.info
+                //DispatchQueue.main.async {
+                //    self?.delegate?.didLoadInitialCharacters()
+                //}
+                print(String(describing: responseModel))
+            case .failure(let error):
+                print(String(describing: error))
+            }
+        }
     }
     
     public var shouldShowMoreIndecator: Bool {
@@ -73,10 +91,33 @@ extension RMCharacterListViewViewModel: UICollectionViewDataSource, UICollection
             withReuseIdentifier: RMCharacterCollectionViewCell.collectionIdentifier,
             for: indexPath
         ) as? RMCharacterCollectionViewCell else {
-            fatalError("Unsuported cell")
+            fatalError("Unsupported cell")
         }
         cell.configure(with: cellViewModels[indexPath.row])
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionFooter, shouldShowMoreIndecator, let footer = collectionView.dequeueReusableSupplementaryView(
+            ofKind: kind,
+            withReuseIdentifier: RMFooterLoadingCollectionReusableView.identifier,
+            for: indexPath
+        ) as? RMFooterLoadingCollectionReusableView  else {
+            fatalError("Unsupported view")
+        }
+        footer.startAnimating()
+        return footer
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        guard shouldShowMoreIndecator else {
+            return .zero
+        }
+        
+        return CGSize(
+            width: collectionView.frame.width,
+            height: 100
+        )
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -97,8 +138,20 @@ extension RMCharacterListViewViewModel: UICollectionViewDataSource, UICollection
 
 extension RMCharacterListViewViewModel: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard shouldShowMoreIndecator else {
+        guard shouldShowMoreIndecator,
+              !isLoadingMoreCharacters,
+              let next = apiInfo?.next,
+              let url = URL(string: next)
+        else {
             return
+        }
+        
+        let offset = scrollView.contentOffset.y
+        let totalContentHeight = scrollView.contentSize.height
+        let totalScrollViewHeight = scrollView.frame.size.height
+        
+        if  offset >= (totalContentHeight - totalScrollViewHeight - 120) {
+            fetchAdditionalCharacters(url: url)
         }
     }
 }
