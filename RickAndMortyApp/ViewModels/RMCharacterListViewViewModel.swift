@@ -77,6 +77,8 @@ final class RMCharacterListViewViewModel: NSObject {
             case .success(let responseModel):
                 let moreResults = responseModel.results
                 let info = responseModel.info
+                //This issue causes that tha list append more items into the list, because in line 91 there was othe append and this affected the count and the aray append with more chars
+                //that required
                 //strongSelf.characters.append(contentsOf: moreResults)
                 strongSelf.apiInfo = info
 
