@@ -39,8 +39,7 @@ final class RMService {
             guard let data = data, error == nil else {
                 completion(.failure(RMServiceError.failedToGetData))
                 return
-            }
-            
+            }            
             do {
                 let result = try JSONDecoder().decode(type.self, from: data)
                 completion(.success(result))
