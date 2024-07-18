@@ -51,8 +51,8 @@ final class RMService {
     }
     
     // MARK: - private
-    private func request(from rmReuqest: RMRequest) -> URLRequest? {
-        guard let url = rmReuqest.url else {
+    private func request(from rmRequest: RMRequest) -> URLRequest? {
+        guard let url = rmRequest.url else {
             return nil
         }
         var request = URLRequest(url: url)
