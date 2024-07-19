@@ -60,7 +60,7 @@ final class RMRequest {
     /// Consturct request
     /// - Parameters:
     ///   - endpoint: Target endpoint
-    ///   - pathComponents: Collection of Path componenets
+    ///   - pathComponents: Collection of Path components
     ///   - queryParameter: Collection of query parameters
     init(
         endpoint: RMEndpoint,
