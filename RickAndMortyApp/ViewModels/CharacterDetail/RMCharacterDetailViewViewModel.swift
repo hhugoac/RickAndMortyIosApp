@@ -28,18 +28,21 @@ final class RMCharacterDetailViewViewModel {
     private func setUpSections() {
         sections = [
             .photo(viewModel: .init()),
-            .episodes(viewModel: [
-                .init(),
-                .init(),
-                .init(),
-                .init()
-            ]),
             .information(viewModel: [
                 .init(),
                 .init(),
                 .init(),
                 .init()
-            ])
+            ]),
+            .episodes(viewModel: [
+                .init(),
+                .init(),
+                .init(),
+                .init(),
+                .init(),
+                .init()
+            ]),
+            
             
         ]
     }
