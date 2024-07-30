@@ -5,14 +5,23 @@
 //  Created by Hector Alonzo  on 19/07/24.
 //
 
-import Foundation
+import UIKit
 
 final class RMCharacterInfoCollectionViewCellViewModel {
-    
     private let type:`Type`
-    public let value: String
-    public let title: String {
+    private let value: String
+    
+    public var title: String {
         self.type.displayTitle
+    }
+    
+    public var displayValue: String {
+        if value.isEmpty { return "None"}
+        return value
+    }
+    
+    public var iconImage: String {
+        return type.iconImage
     }
     
     enum `Type` {
@@ -23,8 +32,28 @@ final class RMCharacterInfoCollectionViewCellViewModel {
         case origin
         case location
         case created
-        case total
+        case episodeCount
         
+        var iconImage: UIImage? {
+            switch self {
+                case .status:
+                    return UIImage(systemName: "bell")
+                case .gender:
+                    return UIImage(systemName: "bell")
+                case .type:
+                    return UIImage(systemName: "bell")
+                case .species:
+                    return UIImage(systemName: "bell")
+                case .origin:
+                    return UIImage(systemName: "bell")
+                case .location:
+                    return UIImage(systemName: "bell")
+                case .created:
+                    return UIImage(systemName: "bell")
+                case .episodeCount:
+                    return UIImage(systemName: "bell")
+            }
+        }
         var displayTitle: String {
             switch self {
                 case .status:
@@ -41,10 +70,8 @@ final class RMCharacterInfoCollectionViewCellViewModel {
                     return "Something"
                 case .created:
                     return "Something"
-                case .total:
+                case .episodeCount:
                     return "Something"
-                default:
-                    <#code#>
             }
         }
     }
