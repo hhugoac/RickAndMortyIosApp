@@ -35,7 +35,7 @@ final class RMCharacterInfoCollectionViewCell: UICollectionViewCell {
     private let titleContainerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .secondarySystemBackground
+        //view.backgroundColor = .secondarySystemBackground
         return view
     }()
     
@@ -87,10 +87,15 @@ final class RMCharacterInfoCollectionViewCell: UICollectionViewCell {
         valueLabel.text = nil
         titleLabel.text = nil
         iconView.image = nil
+        iconView.tintColor = nil
+        titleLabel.textColor = nil
     }
     
     public func configure(with viewModel: RMCharacterInfoCollectionViewCellViewModel) {
         titleLabel.text = viewModel.title
-        valueLabel.text = viewModel.value
+        valueLabel.text = viewModel.displayValue
+        iconView.image = viewModel.iconImage
+        iconView.tintColor = viewModel.tintColor
+        titleLabel.tintColor = viewModel.tintColor
     }
 }
