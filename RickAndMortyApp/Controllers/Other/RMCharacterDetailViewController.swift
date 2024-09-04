@@ -87,7 +87,7 @@ extension RMCharacterDetailViewController: UICollectionViewDelegate, UICollectio
             ) as? RMCharacterPhotoCollectionViewCell else {
                 fatalError("Unsupported cell")
             }
-            cell.backgroundColor = .systemRed
+            //cell.backgroundColor = .systemRed
             cell.configure(with: viewModel)
             return cell
         case .information(let viewModels):
@@ -98,7 +98,7 @@ extension RMCharacterDetailViewController: UICollectionViewDelegate, UICollectio
                 fatalError("Unsupported cell")
             }
             cell.configure(with: viewModels[indexPath.row])
-            cell.backgroundColor = .systemBlue
+            //cell.backgroundColor = .systemBlue
             return cell
         case .episodes(let viewModels):
             guard let cell = collectionView.dequeueReusableCell(
@@ -106,7 +106,7 @@ extension RMCharacterDetailViewController: UICollectionViewDelegate, UICollectio
                 for: indexPath) as? RMCharacterEpisodeCollectionViewCell else {
                 fatalError("Unsupported cell")
             }
-            cell.backgroundColor = .systemOrange
+            //cell.backgroundColor = .systemOrange
             cell.configure(with: viewModels[indexPath.row])
             return cell
         
