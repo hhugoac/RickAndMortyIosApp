@@ -78,8 +78,5 @@ final class RMCharacterDetailView: UIView {
         }
         
     }
-    
-    
-    
 }
 
