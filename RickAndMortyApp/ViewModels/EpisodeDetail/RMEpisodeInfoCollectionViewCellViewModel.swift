@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RMEpisdoInfoCollectionViewCellViewModel {
+struct RMEpisodeInfoCollectionViewCellViewModel {
     public let title: String
     public let value: String
 }
