@@ -7,14 +7,14 @@
 
 import UIKit
 
-final class RMEpisodeDetailViewController: UIViewController {
+final class RMEpisodeDetailViewController: UIViewController, RMEpisodeDetailViewViewModelDelegate {
     
     private let viewModel: RMEpisodeDetailViewViewModel
     
     private let detailView = RMEpisodeDetailView()
     
     init(url:URL?) {
-        self.viewModel = .init(endpoint: url)
+        self.viewModel = RMEpisodeDetailViewViewModel(endpoint: url)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -25,9 +25,13 @@ final class RMEpisodeDetailViewController: UIViewController {
         super.viewDidLoad()
         title = "Episode"
         view.addSubview(detailView)
+        
         addConstraints()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapShare))
+        
+        viewModel.delegate = self
+        viewModel.fetchEpisodeData()
     }
     
     private func addConstraints() {
@@ -44,5 +48,8 @@ final class RMEpisodeDetailViewController: UIViewController {
         
     }
 
-
+    func didFetchEpisodeDetails() {
+        self.detailView.configure(with: viewModel)
+    }
+    
 }
