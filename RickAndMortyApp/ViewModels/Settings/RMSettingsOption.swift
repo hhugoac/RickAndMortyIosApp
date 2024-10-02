@@ -28,6 +28,18 @@ enum RMSettingsOption: CaseIterable{
         }
     }
     
+    var targetUrl: URL? {
+        switch self{
+        case .rateApp: return nil
+        case .contactUs: return URL(string: "https://iosacadeemy.io")
+        case .termns: return URL(string: "https://iosacadeemy.io")
+        case .privacy: return URL(string: "https://iosacadeemy.io")
+        case .apiReference: return URL(string: "https://iosacadeemy.io")
+        case .viewSeries: return URL(string: "https://iosacadeemy.io")
+        case .viewCode: return URL(string: "https://iosacadeemy.io")
+        }
+    }
+    
     var iconContainerColor: UIColor{
         switch self{
         case .rateApp: return .systemRed
