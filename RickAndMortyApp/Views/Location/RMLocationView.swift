@@ -21,7 +21,7 @@ class RMLocationView: UIView {
     }
     
     private let tableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.alpha = 0
         tableView.isHidden = true
@@ -100,8 +100,7 @@ extension RMLocationView: UITableViewDataSource {
                 fatalError("Could not dequeue cell")
             }
         let cellViewModel = cellViewModels[indexPath.row]
-        cell.textLabel?.text = cellViewModel.name
-        //cell.textLabel?.text = "Row \(indexPath.row)"
+        cell.configure(with: cellViewModel)
         return cell
     }
 }
