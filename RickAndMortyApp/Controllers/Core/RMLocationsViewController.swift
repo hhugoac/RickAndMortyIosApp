@@ -21,9 +21,13 @@ final class RMLocationsViewController: UIViewController, RMLocationViewViewModel
     override func viewDidLoad() {
         super.viewDidLoad()
         primaryView.delegate = self
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .action, target: self, action: #selector(didTapSearch)
+        )
         view.addSubview(primaryView)
         view.backgroundColor = .systemBackground
         self.title =  "Locations"
+        
         addSearchButton()
         addConstraints()
         viewModel.delegate = self
@@ -45,7 +49,9 @@ final class RMLocationsViewController: UIViewController, RMLocationViewViewModel
     
     @objc
     private func didTapSearch() {
-        
+        let vc = RMSearchViewController(config: .init(type: .location))
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     // MARK: - RMLocationViewDelegate

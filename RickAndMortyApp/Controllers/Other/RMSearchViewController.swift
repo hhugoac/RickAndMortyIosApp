@@ -10,11 +10,20 @@ import UIKit
 /// Configure controller to search
 final class RMSearchViewController: UIViewController {
 
+    /// Configuration for search session
     struct Config {
         enum `Type`{
             case character
             case episode
             case location
+            
+            var title: String {
+                switch self {
+                    case .character: return "Search Characters"
+                    case .episode: return "Search Episodes"
+                    case .location: return "Search Locations"
+                }
+            }
         }
         
         let type: `Type`
@@ -30,9 +39,13 @@ final class RMSearchViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("Unsupported")
     }
+    
+        // MARK: - Init
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Search"
+        title = config.type.title
+        
     }
     
 
