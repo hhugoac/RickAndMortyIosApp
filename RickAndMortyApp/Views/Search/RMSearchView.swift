@@ -14,6 +14,8 @@ final class RMSearchView: UIView {
     
     // SearchInputView(bar, selection buttons)
     // No results view
+    
+    private let noResultsView = RMNoSearchResultsView()
     // Results collectionViews
 
     
@@ -22,13 +24,25 @@ final class RMSearchView: UIView {
     init(frame: CGRect, viewModel: RMSearchViewViewModel) {
         self.viewModel = viewModel
         super.init(frame: frame)
-        backgroundColor = .red
+        backgroundColor = .systemBackground
+        addSubviews(noResultsView)
         translatesAutoresizingMaskIntoConstraints = false
-        
+        addConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
+    }
+    
+    private func addConstraints() {
+        NSLayoutConstraint.activate([
+            noResultsView.widthAnchor.constraint(equalToConstant: 150),
+            noResultsView.heightAnchor.constraint(equalToConstant: 150),
+            noResultsView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            noResultsView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            
+        ])
     }
 
 }
