@@ -39,6 +39,7 @@
 		4C95D0492C2DF57A00B9429B /* RMSingleLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C95D0482C2DF57A00B9429B /* RMSingleLocation.swift */; };
 		4C95D04B2C2DF81300B9429B /* RMCharacterStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C95D04A2C2DF81300B9429B /* RMCharacterStatus.swift */; };
 		4C95D04D2C2DF92700B9429B /* RMCharacterGender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C95D04C2C2DF92700B9429B /* RMCharacterGender.swift */; };
+		4C9E0D4B2CB59F6F006E7505 /* RMTableLoadingFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9E0D4A2CB59F6F006E7505 /* RMTableLoadingFooterView.swift */; };
 		4CCCF33F2CB47A510009F8CC /* RMSearchOptionPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCF33E2CB47A510009F8CC /* RMSearchOptionPickerViewController.swift */; };
 		4CCCF3412CB488390009F8CC /* RMSearchResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCF3402CB488390009F8CC /* RMSearchResultViewModel.swift */; };
 		4CCCF3432CB49C410009F8CC /* RMSearchResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CCCF3422CB49C410009F8CC /* RMSearchResultsView.swift */; };
@@ -109,6 +110,7 @@
 		4C95D0482C2DF57A00B9429B /* RMSingleLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSingleLocation.swift; sourceTree = "<group>"; };
 		4C95D04A2C2DF81300B9429B /* RMCharacterStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterStatus.swift; sourceTree = "<group>"; };
 		4C95D04C2C2DF92700B9429B /* RMCharacterGender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMCharacterGender.swift; sourceTree = "<group>"; };
+		4C9E0D4A2CB59F6F006E7505 /* RMTableLoadingFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMTableLoadingFooterView.swift; sourceTree = "<group>"; };
 		4CCCF33E2CB47A510009F8CC /* RMSearchOptionPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSearchOptionPickerViewController.swift; sourceTree = "<group>"; };
 		4CCCF3402CB488390009F8CC /* RMSearchResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSearchResultViewModel.swift; sourceTree = "<group>"; };
 		4CCCF3422CB49C410009F8CC /* RMSearchResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSearchResultsView.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 			children = (
 				4C8E47712CADAFD400307913 /* RMLocationView.swift */,
 				4C8E47792CADF33B00307913 /* RMLocationTableViewCell.swift */,
+				4C9E0D4A2CB59F6F006E7505 /* RMTableLoadingFooterView.swift */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -536,6 +539,7 @@
 				4C6300142CB0573600BCF115 /* RMNoSearchResultsView.swift in Sources */,
 				BF6767312C2900710032BAA2 /* RMSettingsViewController.swift in Sources */,
 				BF6A41F92C90F31800AE2587 /* RMEpisodeListView.swift in Sources */,
+				4C9E0D4B2CB59F6F006E7505 /* RMTableLoadingFooterView.swift in Sources */,
 				4C6009DD2C336D1300B000EF /* RMCharacterDetailViewController.swift in Sources */,
 				4C8EA94A2CA759C500089231 /* RMEpisodeInfoCollectionViewCellViewModel.swift in Sources */,
 				4C941CE52C34703700349AE6 /* RMFooterLoadingCollectionReusableView.swift in Sources */,
@@ -728,7 +732,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S7X65V953V;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RickAndMortyApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Rick & Morty";
@@ -756,7 +760,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = S7X65V953V;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RickAndMortyApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Rick & Morty";

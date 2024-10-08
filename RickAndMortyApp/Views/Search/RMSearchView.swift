@@ -45,9 +45,6 @@ final class RMSearchView: UIView {
         viewModel.registerOptionChangeBlock { tuple in
             self.searchInputView.update(option: tuple.0, value: tuple.1)
         }
-        viewModel.registerSearchResultHandler { results in
-            print(results)
-        }
         viewModel.registerSearchResultHandler { [weak self] results in
             DispatchQueue.main.async {
                 self?.resultsView.configure(with: results)
