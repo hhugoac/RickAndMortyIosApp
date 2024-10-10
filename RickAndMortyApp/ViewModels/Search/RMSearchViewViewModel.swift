@@ -47,16 +47,15 @@ final class RMSearchViewViewModel {
             let value: String = element.value
             return URLQueryItem(name: key.queryArgument, value: value)
         }))
-        
         let request = RMRequest(endpoint: config.type.endPoint, queryParameter: queryParams)
         
         switch config.type.endPoint {
             case .character:
                 makeSearchAPICall(RMGetAllCharactersResponse.self, request: request)
             case .location:
-                makeSearchAPICall(RMGetAllEpisodesResponse.self, request: request)
-            case .episode:
                 makeSearchAPICall(RMGetAllLocationsResponse.self, request: request)
+            case .episode:
+                makeSearchAPICall(RMGetAllEpisodesResponse.self, request: request)
         }
     }
     
