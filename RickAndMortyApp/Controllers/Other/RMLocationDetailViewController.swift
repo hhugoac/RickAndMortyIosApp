@@ -28,9 +28,9 @@ class RMLocationDetailViewController: UIViewController, RMLocationDetailViewDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         view.addSubview(detailView)
         title = "Location"
-        view.backgroundColor = .systemBackground
         addConstraints()
         detailView.delegate = self
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapShare))

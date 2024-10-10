@@ -23,6 +23,7 @@ final class RMEpisodeDetailViewController: UIViewController, RMEpisodeDetailView
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         title = "Episode"
         view.addSubview(detailView)
         addConstraints()
