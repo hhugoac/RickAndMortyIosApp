@@ -7,11 +7,6 @@
 
 import Foundation
 
-// Responsabilities
-// - show search results
-// - show no results view
-// - kick off API requests
-
 final class RMSearchViewViewModel {
     
     let config: RMSearchViewController.Config
@@ -24,6 +19,8 @@ final class RMSearchViewViewModel {
     
     private var searchResultModel: Codable?
     
+    // MARK: - Init
+
     init(config: RMSearchViewController.Config) {
         self.config = config
     }
@@ -61,8 +58,6 @@ final class RMSearchViewViewModel {
             case .episode:
                 makeSearchAPICall(RMGetAllLocationsResponse.self, request: request)
         }
-        
-       
     }
     
     private func makeSearchAPICall<T:Codable>(_ type: T.Type, request: RMRequest) {

@@ -107,7 +107,7 @@ final class RMSearchInputView: UIView {
             for: .normal
         )
         button.backgroundColor = .secondarySystemFill
-        button.addTarget(self, action: #selector(didTaped(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
         button.tag = tag
         button.layer.cornerRadius = 6
         
@@ -115,7 +115,7 @@ final class RMSearchInputView: UIView {
     }
     
     @objc
-    private func didTaped(_ sender: UIButton) {
+    private func didTapButton(_ sender: UIButton) {
         guard let options = viewModel?.options else {
             return
         }
@@ -158,7 +158,7 @@ final class RMSearchInputView: UIView {
     // MARK: - UISearchBarDelegate
 extension RMSearchInputView: UISearchBarDelegate {
     
-    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         delegate?.rmSearchInputView(self, didChangeSearchText: searchText)
     }
     

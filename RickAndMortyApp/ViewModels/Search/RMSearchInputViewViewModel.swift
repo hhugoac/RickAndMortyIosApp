@@ -18,12 +18,9 @@ final class RMSearchInputViewViewModel {
         
         var queryArgument: String {
             switch self {
-                case .status:
-                    return "status"
-                case .gender:
-                    return "gender"
-                case .locationType:
-                    return "type"
+                case .status: return "status"
+                case .gender: return "gender"
+                case .locationType: return "type"
             }
         }
         
@@ -46,7 +43,7 @@ final class RMSearchInputViewViewModel {
     
     // MARK: - Public
     public var hasDynamicOptions: Bool {
-        switch type {
+        switch self.type {
             case .character, .location:
                 return true
             case .episode:
@@ -55,7 +52,7 @@ final class RMSearchInputViewViewModel {
     }
     
     public var options: [DynamicOption] {
-        switch type {
+        switch self.type {
             case .character:
                 return [.status, .gender]
             case .location:

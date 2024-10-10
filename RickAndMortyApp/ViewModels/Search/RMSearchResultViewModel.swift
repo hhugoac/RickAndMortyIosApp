@@ -11,13 +11,12 @@ final class RMSearchResultViewModel {
     public private(set) var results: RMSearchResultType
     private var next: String?
     
-    init(results: RMSearchResultType, next: String? = nil) {
+    init(results: RMSearchResultType, next: String?) {
         self.results = results
         self.next = next
-        print(next)
     }
     
-    public private (set) var isLoadingMoreResults = false
+    public private(set) var isLoadingMoreResults = false
     
     public var shouldShowLoadMoreIndicator: Bool {
         return next != nil

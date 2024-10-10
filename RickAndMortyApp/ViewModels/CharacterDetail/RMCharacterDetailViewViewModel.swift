@@ -22,7 +22,7 @@ final class RMCharacterDetailViewViewModel {
     
     public var sections: [SectionType] = []
     
-    // MARK: Init
+    // MARK: - Init
     
     init(character: RMCharacter) {
         self.character = character
@@ -52,14 +52,14 @@ final class RMCharacterDetailViewViewModel {
     private var requestUrl: URL? {
         return URL(string: character.url)
     }
+    
     var title: String {
         return character.name.uppercased()
     }
     
-    // MARK: Layouts
+    // MARK: - Layouts
     
     public func createPhotoSectionLayout() -> NSCollectionLayoutSection {
-        
         let item = NSCollectionLayoutItem(
             layoutSize:NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),

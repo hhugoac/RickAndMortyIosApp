@@ -18,6 +18,7 @@ final class RMSearchView: UIView {
     
     weak var delegate: RMSearchViewDelegate?
     private let viewModel: RMSearchViewViewModel
+    
     // MARK: - Subviews
     private let searchInputView = RMSearchInputView()
     private let noResultsView = RMNoSearchResultsView()
@@ -30,8 +31,8 @@ final class RMSearchView: UIView {
         self.viewModel = viewModel
         super.init(frame: frame)
         backgroundColor = .systemBackground
-        addSubviews(resultsView, noResultsView, searchInputView)
         translatesAutoresizingMaskIntoConstraints = false
+        addSubviews(resultsView, noResultsView, searchInputView)
         addConstraints()
         searchInputView.configure(with: RMSearchInputViewViewModel(type: viewModel.config.type))
         searchInputView.delegate = self
@@ -87,6 +88,7 @@ final class RMSearchView: UIView {
     }
 
 }
+    // MARK: - CollectionView
 
 extension RMSearchView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -102,7 +104,7 @@ extension RMSearchView: UICollectionViewDelegate, UICollectionViewDataSource {
         collectionView.deselectItem(at: indexPath, animated: true)
     }
 }
-
+    // MARK: - RMSearchInputViewDelegate
 extension RMSearchView: RMSearchInputViewDelegate {
     func rmSearchInputView(_ searchInputView: RMSearchInputView, didSelectOption option: RMSearchInputViewViewModel.DynamicOption) {
         delegate?.rmSearchView(self, didSelectOption: option)
@@ -120,17 +122,23 @@ extension RMSearchView: RMSearchInputViewDelegate {
 
 extension RMSearchView: RMSearchResultsViewDelegate {
     func rmSearchResultsView(_ resultsView: RMSearchResultsView, didTapLocationAt index: Int) {
-        guard let locationModel = viewModel.locationSearchResult(at: index) else { return }
+        guard let locationModel = viewModel.locationSearchResult(at: index) else {
+            return
+        }
         delegate?.rmSearchView(self, didSelectLocation: locationModel)
     }
     
     func rmSearchResultsView(_ resultsView: RMSearchResultsView, didTapEpisodeAt index: Int) {
-        guard let episodeModel = viewModel.episodeSearchResult(at: index) else { return }
+        guard let episodeModel = viewModel.episodeSearchResult(at: index) else {
+            return
+        }
         delegate?.rmSearchView(self, didSelectEpisode: episodeModel)
     }
     
     func rmSearchResultsView(_ resultsView: RMSearchResultsView, didTapCharacterAt index: Int) {
-        guard let characterModel = viewModel.characterSearchResult(at: index) else { return }
+        guard let characterModel = viewModel.characterSearchResult(at: index) else {
+            return
+        }
         delegate?.rmSearchView(self, didSelectCharacter: characterModel)
     }
     

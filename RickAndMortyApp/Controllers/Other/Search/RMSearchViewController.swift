@@ -20,7 +20,7 @@ final class RMSearchViewController: UIViewController {
             var title: String {
                 switch self {
                 case .character: return "Search Characters"
-                case .episode: return "Search Episodes"
+                case .episode: return "Search Episode"
                 case .location: return "Search Locations"
                 }
             }
@@ -37,12 +37,13 @@ final class RMSearchViewController: UIViewController {
         let type: `Type`
     }
 
-    private let config: Config
+    //private let config: Config
     private let viewModel: RMSearchViewViewModel
     private let searchView: RMSearchView
+    
+    // MARK: - Init
 
     init(config: Config) {
-        self.config = config
         let viewModel = RMSearchViewViewModel(config: config)
         self.viewModel = viewModel
         self.searchView = RMSearchView(frame: .zero, viewModel: viewModel)
@@ -53,17 +54,23 @@ final class RMSearchViewController: UIViewController {
         fatalError("Unsupported")
     }
 
-    // MARK: - Init
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = config.type.title
+        title = viewModel.config.type.title
         view.backgroundColor = .systemBackground
         view.addSubview(searchView)
         addConstraints()
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: "Search", style: .done, target: self,
             action: #selector(didExecuteSearch))
+        searchView.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        searchView.presentKeyboard()
     }
 
     private func addConstraints() {
@@ -84,16 +91,10 @@ final class RMSearchViewController: UIViewController {
         viewModel.executeSearch()
     }
 }
+    // MARK: - RMSearchViewDelegate
 
 extension RMSearchViewController: RMSearchViewDelegate {
-    func rmSearchView(_ searchView: RMSearchView, didSelectLocation location: RMLocation) {
-        let vc = RMLocationDetailViewController(location: location)
-        vc.navigationItem.largeTitleDisplayMode = .never
-        navigationController?.pushViewController(vc, animated: true)    
-    }
-    
     func rmSearchView(_ searchView: RMSearchView, didSelectOption option: RMSearchInputViewViewModel.DynamicOption) {
-        print("Should present option picker")
         let vc = RMSearchOptionPickerViewController(option: option) { [weak self] selection in
             DispatchQueue.main.async {
                 self?.viewModel.set(value: selection, for: option)
@@ -102,6 +103,12 @@ extension RMSearchViewController: RMSearchViewDelegate {
         vc.sheetPresentationController?.detents = [.medium()]
         vc.sheetPresentationController?.prefersGrabberVisible = true
         present(vc, animated: true)
+    }
+    
+    func rmSearchView(_ searchView: RMSearchView, didSelectLocation location: RMLocation) {
+        let vc = RMLocationDetailViewController(location: location)
+        vc.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(vc, animated: true)    
     }
     
     func rmSearchView(_ searchView: RMSearchView, didSelectCharacter character: RMCharacter) {

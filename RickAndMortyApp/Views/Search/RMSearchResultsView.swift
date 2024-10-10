@@ -61,7 +61,7 @@ final class RMSearchResultsView: UIView {
     }()
 
     private var locationCellViewModels: [RMLocationTableViewCellViewModel] = []
-    private var collectionViewModelCellViewModels: [any Hashable] = []
+    private var collectionViewCellViewModels: [any Hashable] = []
 
     // MARK: - Init
 
@@ -79,10 +79,10 @@ final class RMSearchResultsView: UIView {
         guard let viewModel = viewModel else { return }
         switch viewModel.results {
         case .characters(let viewModels):
-            self.collectionViewModelCellViewModels = viewModels
+            self.collectionViewCellViewModels = viewModels
             setUpCollectionView()
         case .episodes(let viewModels):
-            self.collectionViewModelCellViewModels = viewModels
+            self.collectionViewCellViewModels = viewModels
             setUpCollectionView()
         case .locations(let viewModels):
             setUpTableView(viewModels: viewModels)
@@ -97,15 +97,16 @@ final class RMSearchResultsView: UIView {
         collectionView.dataSource = self
         collectionView.reloadData()
     }
-    private func setUpTableView(viewModels: [RMLocationTableViewCellViewModel])
-    {
-        collectionView.delegate = self
-        collectionView.dataSource = self
+    
+    private func setUpTableView(viewModels: [RMLocationTableViewCellViewModel]) {
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.isHidden = false
         collectionView.isHidden = true
         self.locationCellViewModels = viewModels
         tableView.reloadData()
     }
+    
     private func addCobstraints() {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: topAnchor),
@@ -161,12 +162,16 @@ extension RMSearchResultsView: UITableViewDataSource, UITableViewDelegate {
 // MARK: - ColectionView
 
 extension RMSearchResultsView: UICollectionViewDataSource,
-    UICollectionViewDelegate
-{
+    UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return collectionViewCellViewModels.count
+    }
+    
     func collectionView(
         _ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let currentViewModel = collectionViewModelCellViewModels[indexPath.row]
+        let currentViewModel = collectionViewCellViewModels[indexPath.row]
         if let characterVM = currentViewModel
             as? RMCharacterCollectionViewCellViewModel
         {
@@ -185,31 +190,20 @@ extension RMSearchResultsView: UICollectionViewDataSource,
 
         guard
             let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: RMCharacterEpisodeCollectionViewCell
-                    .cellIdentifier,
+                withReuseIdentifier: RMCharacterEpisodeCollectionViewCell.cellIdentifier,
                 for: indexPath
             ) as? RMCharacterEpisodeCollectionViewCell
         else {
             fatalError()
         }
-        if let episodeVM = currentViewModel
-            as? RMCharacterEpisodeCollectionViewCellViewModel
-        {
+        if let episodeVM = currentViewModel as? RMCharacterEpisodeCollectionViewCellViewModel {
             cell.configure(with: episodeVM)
         }
         return cell
     }
 
-    func collectionView(
-        _ collectionView: UICollectionView, numberOfItemsInSection section: Int
-    ) -> Int {
-        return collectionViewModelCellViewModels.count
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath
-    ) {
-        //collectionView.deselectItem(at: indexPath, animated: true)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
         guard let viewModel = viewModel else { return }
         switch viewModel.results {
             case .characters:
@@ -226,7 +220,7 @@ extension RMSearchResultsView: UICollectionViewDataSource,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let currentViewModel = collectionViewModelCellViewModels[indexPath.row]
+        let currentViewModel = collectionViewCellViewModels[indexPath.row]
         let bounds = collectionView.bounds
 
         if currentViewModel is RMCharacterCollectionViewCellViewModel {
@@ -273,9 +267,10 @@ extension RMSearchResultsView: UIScrollViewDelegate {
 
     private func handleCharacterOrEpisodePagination(scrollView: UIScrollView) {
         guard let viewModel = viewModel,
-        collectionViewModelCellViewModels.isEmpty,
-        viewModel.shouldShowLoadMoreIndicator,
-        viewModel.isLoadingMoreResults else { return
+              !collectionViewCellViewModels.isEmpty,
+              viewModel.shouldShowLoadMoreIndicator,
+              !viewModel.isLoadingMoreResults else {
+            return
         }
         
         Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] t in
@@ -286,17 +281,18 @@ extension RMSearchResultsView: UIScrollViewDelegate {
             if offset >= (totalContentHeight - totalScrollViewFixedHeight - 120) {
                 viewModel.fetchAdditionalLocation { [weak self] newResults in
                     guard let strongSelf = self else { return }
+                    
                     DispatchQueue.main.async {
                         strongSelf.tableView.tableFooterView = nil
                         
-                        let originalCount = strongSelf.collectionViewModelCellViewModels.count
+                        let originalCount = strongSelf.collectionViewCellViewModels.count
                         let newCount = (newResults.count - originalCount)
                         let total = originalCount + newCount
                         let startIndex = total - newCount
                         let indexPathsToAdd: [IndexPath] = Array(startIndex..<(startIndex+newCount)).compactMap({
                             return IndexPath(row: $0, section: 0)
                         })
-                        strongSelf.collectionViewModelCellViewModels = newResults
+                        strongSelf.collectionViewCellViewModels = newResults
                         strongSelf.collectionView.insertItems(at: indexPathsToAdd)
                     }
                     

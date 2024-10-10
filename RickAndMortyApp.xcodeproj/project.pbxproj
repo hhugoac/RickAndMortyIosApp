@@ -186,10 +186,10 @@
 		4C6300152CB0576000BCF115 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				4C6300112CB0512C00BCF115 /* RMSearchViewViewModel.swift */,
 				4C6300162CB0579000BCF115 /* RMNoSearchResultsViewViewModel.swift */,
 				4C63001A2CB0582900BCF115 /* RMSearchInputViewViewModel.swift */,
 				4CCCF3402CB488390009F8CC /* RMSearchResultViewModel.swift */,
+				4C6300112CB0512C00BCF115 /* RMSearchViewViewModel.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -235,9 +235,9 @@
 			isa = PBXGroup;
 			children = (
 				4C6009E02C336F4500B000EF /* RMCharacterDetailViewViewModel.swift */,
-				4C8688452C4B041C00E21FF0 /* RMCharacterPhotoCollectionViewCellViewModel.swift */,
-				4C8688472C4B043000E21FF0 /* RMCharacterInfoCollectionViewCellViewModel.swift */,
 				4C8688492C4B043F00E21FF0 /* RMCharacterEpisodeCollectionViewCellViewModel.swift */,
+				4C8688472C4B043000E21FF0 /* RMCharacterInfoCollectionViewCellViewModel.swift */,
+				4C8688452C4B041C00E21FF0 /* RMCharacterPhotoCollectionViewCellViewModel.swift */,
 			);
 			path = CharacterDetail;
 			sourceTree = "<group>";
@@ -369,8 +369,8 @@
 		BF6767202C28FE260032BAA2 /* ApiClient */ = {
 			isa = PBXGroup;
 			children = (
-				BF6767362C290B830032BAA2 /* RMRequest.swift */,
 				BF67673A2C290C1E0032BAA2 /* RMEndpoint.swift */,
+				BF6767362C290B830032BAA2 /* RMRequest.swift */,
 				BF6767382C290B9D0032BAA2 /* RMService.swift */,
 			);
 			path = ApiClient;
@@ -379,13 +379,13 @@
 		BF6767212C28FE2F0032BAA2 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				4C6300152CB0576000BCF115 /* Search */,
 				4C8688442C4B03AA00E21FF0 /* CharacterDetail */,
 				4C8EA9472CA7598600089231 /* EpisodeDetail */,
 				4C8E477B2CADF56800307913 /* Location */,
 				BF5024E02C31280300018626 /* RMCharacterCollectionViewCellViewModel.swift */,
 				BF5024D82C30ED9700018626 /* RMCharacterListViewViewModel.swift */,
 				BFE6BA202C9DF52600CC91BE /* RMEpisodeListViewViewModel.swift */,
+				4C6300152CB0576000BCF115 /* Search */,
 				BF48DE3F2CAC8A9100518F63 /* Settings */,
 			);
 			path = ViewModels;
