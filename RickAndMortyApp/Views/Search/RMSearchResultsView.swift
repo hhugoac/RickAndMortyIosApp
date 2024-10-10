@@ -9,7 +9,7 @@ import UIKit
 
 protocol RMSearchResultsViewDelegate: AnyObject {
     func rmSearchResultsView(_ resultsView: RMSearchResultsView, didTapLocationAt index: Int)
-    func rmSearchResultsView(_ resultsView: RMSearchResultsView, didTapCharacternAt index: Int)
+    func rmSearchResultsView(_ resultsView: RMSearchResultsView, didTapCharacterAt index: Int)
     func rmSearchResultsView(_ resultsView: RMSearchResultsView, didTapEpisodeAt index: Int)
 }
 
@@ -213,9 +213,9 @@ extension RMSearchResultsView: UICollectionViewDataSource,
         guard let viewModel = viewModel else { return }
         switch viewModel.results {
             case .characters:
-                delegate?.rmSearchResultsView(self, didSelectCharacter: collectionViewModelCellViewModels[indexPath.row])
+                delegate?.rmSearchResultsView(self, didTapCharacterAt: indexPath.row)
             case .episodes:
-                delegate?.rmSearchResultsView(self, didTapEpisodeAt: collectionViewModelCellViewModels[indexPath.row])
+                delegate?.rmSearchResultsView(self, didTapEpisodeAt: indexPath.row)
             case .locations:
                 break
         }
