@@ -12,7 +12,7 @@ Full featured iOS app showcasing the Rick and Morty API.
 - [Leverages free Rick & Morty API](https://rickandmortyapi.com/)
 
 - Built in Xcode 16
-
+![RickAndMortyIosApp](/ScreenShots/cover.png)
 ## Design
 
 The app has five key area that we will build out step-by-step
