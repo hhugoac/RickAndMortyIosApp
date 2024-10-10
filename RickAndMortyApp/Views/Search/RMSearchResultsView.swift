@@ -8,8 +8,9 @@
 import UIKit
 
 protocol RMSearchResultsViewDelegate: AnyObject {
-    func rmSearchResultsView(
-        _ resultsView: RMSearchResultsView, didTapLocationAt index: Int)
+    func rmSearchResultsView(_ resultsView: RMSearchResultsView, didTapLocationAt index: Int)
+    func rmSearchResultsView(_ resultsView: RMSearchResultsView, didTapCharacternAt index: Int)
+    func rmSearchResultsView(_ resultsView: RMSearchResultsView, didTapEpisodeAt index: Int)
 }
 
 final class RMSearchResultsView: UIView {
@@ -35,8 +36,7 @@ final class RMSearchResultsView: UIView {
     private var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(
-            top: 0, left: 10, bottom: 10, right: 10)
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 
         let collectionView = UICollectionView(
             frame: .zero, collectionViewLayout: layout)
@@ -209,7 +209,16 @@ extension RMSearchResultsView: UICollectionViewDataSource,
     func collectionView(
         _ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath
     ) {
-        collectionView.deselectItem(at: indexPath, animated: true)
+        //collectionView.deselectItem(at: indexPath, animated: true)
+        guard let viewModel = viewModel else { return }
+        switch viewModel.results {
+            case .characters:
+                delegate?.rmSearchResultsView(self, didSelectCharacter: collectionViewModelCellViewModels[indexPath.row])
+            case .episodes:
+                delegate?.rmSearchResultsView(self, didTapEpisodeAt: collectionViewModelCellViewModels[indexPath.row])
+            case .locations:
+                break
+        }
     }
 
     func collectionView(
@@ -221,11 +230,11 @@ extension RMSearchResultsView: UICollectionViewDataSource,
         let bounds = collectionView.bounds
 
         if currentViewModel is RMCharacterCollectionViewCellViewModel {
-            let width = (bounds.width - 30) / 2
+            let width = UIDevice.isiPhone ? (bounds.width - 30) / 2 : (bounds.width - 50)/4
             return CGSize(width: width, height: width * 1.5)
         }
 
-        let width = bounds.width - 20
+        let width = UIDevice.isiPhone ? bounds.width - 20 : (bounds.width-50)/4
         return CGSize(width: width, height: 100)
 
     }
@@ -276,8 +285,20 @@ extension RMSearchResultsView: UIScrollViewDelegate {
             
             if offset >= (totalContentHeight - totalScrollViewFixedHeight - 120) {
                 viewModel.fetchAdditionalLocation { [weak self] newResults in
-                    self?.tableView.tableFooterView = nil
-                    self?.collectionViewModelCellViewModels = newResults
+                    guard let strongSelf = self else { return }
+                    DispatchQueue.main.async {
+                        strongSelf.tableView.tableFooterView = nil
+                        
+                        let originalCount = strongSelf.collectionViewModelCellViewModels.count
+                        let newCount = (newResults.count - originalCount)
+                        let total = originalCount + newCount
+                        let startIndex = total - newCount
+                        let indexPathsToAdd: [IndexPath] = Array(startIndex..<(startIndex+newCount)).compactMap({
+                            return IndexPath(row: $0, section: 0)
+                        })
+                        strongSelf.collectionViewModelCellViewModels = newResults
+                        strongSelf.collectionView.insertItems(at: indexPathsToAdd)
+                    }
                     
                 }
             }
