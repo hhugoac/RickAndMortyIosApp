@@ -279,7 +279,7 @@ extension RMSearchResultsView: UIScrollViewDelegate {
             let totalScrollViewFixedHeight = scrollView.frame.size.height
             
             if offset >= (totalContentHeight - totalScrollViewFixedHeight - 120) {
-                viewModel.fetchAdditionalLocation { [weak self] newResults in
+                viewModel.fetchAdditionalResults { [weak self] newResults in
                     guard let strongSelf = self else { return }
                     
                     DispatchQueue.main.async {
